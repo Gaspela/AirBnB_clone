@@ -3,7 +3,6 @@
 Creating the parent class Base
 """
 
-
 import uuid
 import datetime
 
@@ -11,7 +10,7 @@ import datetime
 class BaseModel:
     """Base class"""
 
-    def __init__(self, id=None, created_at=None, update_at=None):
+    def __init__(self, *args, **kwargs):
         """Class constructor"""
 
         if id is not None:
@@ -32,10 +31,10 @@ class BaseModel:
 
     def to_dict(self):
         """Return dict"""
-        self.update_at = str(datetime.datetime.isoformat(self.update_at))
-        self.created_at = str(datetime.datetime.isoformat(self.created_at))
-
-        dict_copy = self.__dict__
-        d = {self.__class__: self}
-        d.update(dict_copy)
+        dict_copy = {}
+        dict_copy.update(self.__dict__)
+        dict_copy["__class__"] = self.__class__
+        dict_copy["update_at"] = str(datetime.datetime.isoformat(self.update_at))
+        dict_copy["created_at"] = str(datetime.datetime.isoformat(self.created_at))
+        dict_copy["id"] = str(self.id)
         return dict_copy
