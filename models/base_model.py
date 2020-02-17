@@ -26,8 +26,11 @@ class BaseModel:
         return "[<{}>] (<{}>) <{}>".format("BaseModel", self.id, self.__dict__)
 
     def save(self):
-        """Update public instance attr up"""
-        self.update_at = datetime.datetime.now()
+        """
+        Update with self.updated and time.
+        """
+        self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """
