@@ -5,6 +5,7 @@ Filestorage funtion all, new, save, reload
 import json
 import os.path
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage():
