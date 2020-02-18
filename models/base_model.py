@@ -1,6 +1,6 @@
 #!/user/bin/python3
 """
-Creating the parent class Base
+Class Base
 """
 
 import models
