@@ -31,7 +31,7 @@ class HBNBCommand(cmd.Cmd):
     }
 
     def emptyline(self):
-        """Ignor empty spaces"""
+        """Ignore empty spaces"""
         pass
 
     def do_quit(self, arg):
@@ -52,17 +52,15 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Creates a new instance of basemodel"""
-        try:
-            if not arg:
-                raise SyntaxError()
-            _list = arg.split(" ")
-            obj = eval("{}()".format(_list[0]))
+        if self.all_classes.get(arg):
+            obj = self.all_classes[arg]()
+            print("{}".format(getattr(obj, 'id')))
             obj.save()
-            print("{}".format(obj.id))
-        except SyntaxError:
-            print("** class name mising **")
-        except NameError:
+        elif not arg:
+            print("** class name missing **")
+        elif arg not in self.all_classes:
             print("** class doesn't exist **")
+            return
 
     def do_show(self, arg):
         """Print the str of an instance"""
@@ -155,6 +153,5 @@ class HBNBCommand(cmd.Cmd):
                     print("** no instance found **")
 
 
-"""Interactive or no interactive mode"""
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
