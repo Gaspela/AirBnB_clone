@@ -23,17 +23,17 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     all_classes = {"BaseModel", "User", "State", "City",
-                       "Amenity", "Place", "Review"}
+                   "Amenity", "Place", "Review"}
 
-    def emptyarg(self):
+    def emptyline(self):
         """Ignor empty spaces"""
         pass
 
-    def do_quit(self, arg):
+    def do_quit(self, line):
         """Quit command"""
         return True
 
-    def do_EOF(self, arg):
+    def do_EOF(self, line):
         """Quit command to exit at end of file"""
         return True
 
@@ -69,10 +69,10 @@ class HBNBCommand(cmd.Cmd):
         elif len(_line) == 1:
             print("** instance id missing **")
         elif len(_line) == 2:
-            k = _line[0] + "." + _line[1]
+            key = _line[0] + "." + _line[1]
             ob = storage.all()
-            if ob.get(k):
-                print(ob[k])
+            if ob.get(key):
+                print(ob[key])
             else:
                 print("** no instance found **")
 
@@ -104,20 +104,21 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """Print all str of all instances"""
         objects = storage.all()
-        a_list = []
+        _list = []
         if arg:
             if arg in self.all_classes:
-                for k, v in objects.items():
-                    splitkey = k.split(".")
+                for key, v in objects.items():
+                    splitkey = key.split(".")
                     if splitkey[0] == arg:
-                        a_list.append(str(v))
+                        _list.append(str(v))
             else:
                 print("** class doesn't exist **")
         else:
             for v in objects.values():
-                a_list.append(str(v))
+                _list.append(str(v))
 
-        print(a_list)
+        if _list != []:
+            print(_list)
 
     def do_update(self, arg):
         """Adding or updating attributes"""
@@ -137,15 +138,15 @@ class HBNBCommand(cmd.Cmd):
             print("** value missing **")
         else:
             if _line[0] in self.all_classes:
-                k = _line[0] + "." + _line[1]
-                ob = storage.all()
-                if k in ob:
-                    obj = ob.get(k)
+                key = _line[0] + "." + _line[1]
+                objects = storage.all()
+                if key in objects:
+                    value = objects.get(key)
                     try:
-                        attr = getattr(obj, _line[2])
-                        setattr(obj, _line[2], type(attr)(_line[3]))
+                        attr = getattr(value, _line[2])
+                        setattr(value, _line[2], type(attr)(_line[3]))
                     except:
-                        setattr(obj, _line[2], _line[3])
+                        setattr(value, _line[2], _line[3])
                     storage.save()
                 else:
                     print("** no instance found **")
