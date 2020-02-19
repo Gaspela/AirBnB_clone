@@ -83,28 +83,26 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """Delete an instance"""
-        try:
-            if not arg:
-                raise SyntaxError()
-            _list = arg.split(" ")
-            if len(_list) < 2:
-                raise IndexError()
-            objects = storage.all()
-            key = _list[0] + '.' + _list[1]
-            if key in objects:
-                del objects[key]
-                storage.save()
-            else:
-                raise KeyError()
-
-        except SyntaxError:
+        _line = shlex.split(arg)
+        if len(_line) == 0:
             print("** class name missing **")
-        except NameError:
+            return
+        elif _line[0] not in self.all_classes:
             print("** class doesn't exist **")
-        except IndexError:
+            return
+        elif len(_line) == 1:
             print("** instance id missing **")
-        except KeyError:
-            print("** no instance found **")
+            return
+        else:
+            objects = storage.all()
+            key = "{}.{}".format(_line[0], _line[1])
+            if key not in objects.keys():
+                print("** no instance found **")
+                return
+            else:
+                objects.pop(key)
+                storage.save()
+                return
 
     def do_all(self, arg):
         """Print all str of all instances"""
