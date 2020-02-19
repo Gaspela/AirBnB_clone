@@ -22,18 +22,18 @@ class HBNBCommand(cmd.Cmd):
     """Command interpreter """
     prompt = "(hbnb) "
 
-    classes = {"BaseModel", "User", "State", "City",
-                   "Amenity", "Place", "Review"}
+    all_classes = {"BaseModel", "User", "State", "City",
+                       "Amenity", "Place", "Review"}
 
-    def emptyline(self):
+    def emptyarg(self):
         """Ignor empty spaces"""
         pass
 
-    def do_quit(self, line):
+    def do_quit(self, arg):
         """Quit command"""
         return True
 
-    def do_EOF(self, line):
+    def do_EOF(self, arg):
         """Quit command to exit at end of file"""
         return True
 
@@ -45,15 +45,15 @@ class HBNBCommand(cmd.Cmd):
         """EOF command to quit"""
         print("EOF command to exit the program\n")
 
-    def do_create(self, line):
+    def do_create(self, arg):
         """Creates a new instance of basemodel"""
         try:
-            if not line:
+            if not arg:
                 raise SyntaxError()
-            _list = line.split(" ")
-            objectsj = eval("{}()".format(_list[0]))
-            objectsj.save()
-            print("{}".format(objectsj.id))
+            _list = arg.split(" ")
+            obj = eval("{}()".format(_list[0]))
+            obj.save()
+            print("{}".format(obj.id))
         except SyntaxError:
             print("** class name mising **")
         except NameError:
@@ -61,36 +61,36 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """Print the str of an instance"""
-        args = shlex.split(arg)
-        if len(args) == 0:
+        _line = shlex.split(arg)
+        if len(_line) == 0:
             print("** class name missing **")
-        elif args[0] not in self.classes:
+        elif _line[0] not in self.all_classes:
             print("** class doesn't exist **")
-        elif len(args) == 1:
+        elif len(_line) == 1:
             print("** instance id missing **")
-        elif len(args) == 2:
-            key = args[0] + "." + args[1]
-            objects = storage.all()
-            if objects.get(key):
-                print(objects[key])
+        elif len(_line) == 2:
+            k = _line[0] + "." + _line[1]
+            ob = storage.all()
+            if ob.get(k):
+                print(ob[k])
             else:
                 print("** no instance found **")
 
-    def do_destroy(self, line):
+    def do_destroy(self, arg):
         """Delete an instance"""
         try:
-            if not line:
+            if not arg:
                 raise SyntaxError()
-            _list = line.split(" ")
+            _list = arg.split(" ")
             if len(_list) < 2:
                 raise IndexError()
-            objectsjects = storage.all()
-            keyey = _list[0] + '.' + _list[1]
-            if keyey in objectsjects:
-                del objectsjects[keyey]
+            objects = storage.all()
+            key = _list[0] + '.' + _list[1]
+            if key in objects:
+                del objects[key]
                 storage.save()
             else:
-                raise keyeyError()
+                raise KeyError()
 
         except SyntaxError:
             print("** class name missing **")
@@ -98,51 +98,57 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         except IndexError:
             print("** instance id missing **")
-        except keyeyError:
+        except KeyError:
             print("** no instance found **")
 
     def do_all(self, arg):
         """Print all str of all instances"""
         objects = storage.all()
-        _list = []
+        a_list = []
         if arg:
-            if arg in self.classes:
-                for key, value in objects.items():
-                    splitkeyey = key.split(".")
-                    if splitkeyey[0] == arg:
-                        _list.append(str(value))
+            if arg in self.all_classes:
+                for k, v in objects.items():
+                    splitkey = k.split(".")
+                    if splitkey[0] == arg:
+                        a_list.append(str(v))
             else:
                 print("** class doesn't exist **")
         else:
-            for value in objects.values():
-                _list.append(str(value))
+            for v in objects.values():
+                a_list.append(str(v))
 
-        print(_list)
+        print(a_list)
 
-    def do_update(self, line):
+    def do_update(self, arg):
         """Adding or updating attributes"""
-        _list = line.split(" ")
-        print(_list)
-        objectsjects = storage.all()
-        print(objectsjects[_list[0] + "." + _list[1]])
-        if len(_list) < 1:
-            print("** class name missing** ")
-        elif _list[0] in self.classes:
-            if len(_list) < 2:
-                print("** instance id missing **")
-            elif _list[0] + "." + _list[1] in objectsjects:
-                if len(_list) < 3:
-                    print("** attribute name missing **")
-                elif len(_list) < 4:
-                    print("** value missing **")
-                else:
-                    instance = objectsjects[_list[0] + "." + _list[1]]
-                    setattr(instance, _list[2], _list[3])
-                    storage.save()
+        _line = shlex.split(arg)
+        if len(_line) == 0:
+            print("** class name missing **")
+        elif _line[0] not in self.all_classes:
+            print("** class doesn't exist **")
+        elif len(_line) == 1:
+            print("** instance id missing **")
+        elif len(_line) == 2:
+            if storage.all().get(_line[0] + "." + _line[1]):
+                print("** attribute name missing **")
             else:
                 print("** no instance found **")
+        elif len(_line) == 3:
+            print("** value missing **")
         else:
-            print("** class doesn't exist **")
+            if _line[0] in self.all_classes:
+                k = _line[0] + "." + _line[1]
+                ob = storage.all()
+                if k in ob:
+                    obj = ob.get(k)
+                    try:
+                        attr = getattr(obj, _line[2])
+                        setattr(obj, _line[2], type(attr)(_line[3]))
+                    except:
+                        setattr(obj, _line[2], _line[3])
+                    storage.save()
+                else:
+                    print("** no instance found **")
 
 
 """Interactive or no interactive mode"""
