@@ -6,9 +6,7 @@ Program that contain the entry point of the command interpreter
 import shlex
 import cmd
 from datetime import datetime
-import models
 from models import storage
-from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -22,18 +20,25 @@ class HBNBCommand(cmd.Cmd):
     """Command interpreter """
     prompt = "(hbnb) "
 
-    all_classes = {"BaseModel", "User", "State", "City",
-                   "Amenity", "Place", "Review"}
+    all_classes = {
+        "BaseModel": BaseModel,
+        "User": User,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Place": Place,
+        "Review": Review
+    }
 
     def emptyline(self):
         """Ignor empty spaces"""
         pass
 
-    def do_quit(self, line):
+    def do_quit(self, arg):
         """Quit command"""
         return True
 
-    def do_EOF(self, line):
+    def do_EOF(self, arg):
         """Quit command to exit at end of file"""
         return True
 
