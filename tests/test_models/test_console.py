@@ -5,7 +5,10 @@ Test cases for the console
 
 
 import unittest
+import sys
+import models
 from unittest.mock import patch
+from unittest.mock import create_autoespec
 from io import StringIO
 import pep8
 import os
@@ -53,7 +56,7 @@ class TestConsole(unittest.TestCase):
         """Testing empty line input"""
         with patch('sys.stdout', new=StringIO()) as kc:
             self.consol.onecmd("\n")
-            self.asserEqual('', kc.getvalue())
+            self.assertEqual('', kc.getvalue())
 
     def test_quit(self):
         """Testing the quit command"""
@@ -69,6 +72,14 @@ class TestConsole(unittest.TestCase):
         with patch('sys.stdout', new=StringIO()) as kc:
             self.consol.onecmd("all State")
             self.assertEqual("[]\n", kc.getvalue())
+
+    def test_create(self):
+        '''
+        Test that create works
+        '''
+        console = self.create()
+        console.onecmd("create User")
+        self.assertTrue(isinstance(self.capt_out.getvalue(), str))
 
 
 if __name__ == "__main__":
