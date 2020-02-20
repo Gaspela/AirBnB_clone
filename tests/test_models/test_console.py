@@ -54,24 +54,24 @@ class TestConsole(unittest.TestCase):
 
     def test_emptyline(self):
         """Testing empty line input"""
-        with patch('sys.stdout', new=StringIO()) as kc:
+        with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("\n")
-            self.assertEqual('', kc.getvalue())
+            self.assertEqual('', f.getvalue())
 
     def test_quit(self):
         """Testing the quit command"""
-        with patch('sys.stdout', new=StringIO()) as kc:
+        with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("quit")
-            self.assertEqual('', kc.getvalue())
+            self.assertEqual('', f.getvalue())
 
     def test_all(self):
         """Testing the all command"""
-        with patch('sys.stdout', new=StringIO()) as kc:
+        with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all asdfghjkl")
-            self.assertEqual("** class doesn't exist **\n", kc.getvalue())
-        with patch('sys.stdout', new=StringIO()) as kc:
+            self.assertEqual("** class doesn't exist **\n", f.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f:
             self.consol.onecmd("all State")
-            self.assertEqual("[]\n", kc.getvalue())
+            self.assertEqual("[]\n", f.getvalue())
 
     def test_create(self):
         '''
