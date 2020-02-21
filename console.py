@@ -5,6 +5,7 @@ Program that contain the entry point of the command interpreter
 
 import shlex
 import cmd
+import re
 from datetime import datetime
 from models import storage
 from models.base_model import BaseModel
@@ -73,9 +74,9 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
         elif len(_line) == 2:
             key = _line[0] + "." + _line[1]
-            ob = storage.all()
-            if ob.get(key):
-                print(ob[key])
+            obj = storage.all()
+            if obj.get(key):
+                print(obj[key])
             else:
                 print("** no instance found **")
 
@@ -146,11 +147,43 @@ class HBNBCommand(cmd.Cmd):
                     try:
                         attr = getattr(value, _line[2])
                         setattr(value, _line[2], type(attr)(_line[3]))
-                    except:
+                    except AttributeError:
                         setattr(value, _line[2], _line[3])
                     storage.save()
                 else:
                     print("** no instance found **")
+
+    def precmd(self, arg):
+        """ Call the all instances the class"""
+        linec_ = arg[-2:]
+        _linec = arg[:-2]
+        if arg.count('.') == 1 and arg.count(' ') == 0 and linec_ == "()":
+            cut = _linec.split('.')
+            return cut[1] + ' ' + cut[0]
+        elif arg.count('.') == 1 and arg.count(
+                '(') == 1 and arg.count(')') == 1:
+            _line = arg[:]
+            line1 = _line.split('.')
+            line2 = line1[1].split('(')
+            line2[1] = line2[1][:-1]
+            concat = line2[0] + ' ' + line1[0] + ' '
+            line3 = line2[1].replace('"', '')
+            for i in line3.split(','):
+                concat += i
+            return concat
+        else:
+            return arg
+
+    def do_count(self, arg):
+        """Count all objs storage"""
+
+        _line = shlex.split(arg)
+        cnt = 0
+        for i, item in storage.all().items():
+            if item.__class__.__name__ == str(_line[0]):
+                cnt += 1
+        print(cnt)
+        return
 
 
 if __name__ == '__main__':
