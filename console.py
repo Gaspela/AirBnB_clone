@@ -5,7 +5,6 @@ Program that contain the entry point of the command interpreter
 
 import shlex
 import cmd
-import re
 from datetime import datetime
 from models import storage
 from models.base_model import BaseModel
