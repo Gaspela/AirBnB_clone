@@ -1,13 +1,16 @@
 #!/usr/bin/python3
-""" Unit test User """
-import unittest
+'''Tests for User class'''
 import models
 import os
+import os.path
+import unittest
 from models.user import User
+from models.engine import file_storage
+from models.engine.file_storage import FileStorage
 
 
-class TestUser(unittest.TestCase):
-    """ Test for class User"""
+class Test_User(unittest.TestCase):
+    '''start tests'''
 
     def test_docstring(self):
         '''test if funcions, methods, classes
@@ -29,31 +32,32 @@ class TestUser(unittest.TestCase):
         is_exec_true = os.access('models/user.py', os.X_OK)
         self.assertTrue(is_exec_true)
 
-    def test_init_User(self):
-        """test if an object is an type User"""
-        my_object = User()
-        self.assertIsInstance(my_object, User)
+    def test_is_an_instance(self):
+        '''check if my_model is an instance of User'''
+        my_model = User()
+        self.assertIsInstance(my_model, User)
 
     def test_id(self):
-        """ test that id is unique """
-        my_objectId = User()
-        my_objectId1 = User()
-        self.assertNotEqual(my_objectId.id, my_objectId1.id)
+        '''test if the id of two instances are different'''
+        my_model = User()
+        my_model1 = User()
+        self.assertNotEqual(my_model.id, my_model1.id)
 
     def test_str(self):
         '''check if the output of str is in the specified format'''
-        my_strobject = User()
-        _dict = my_strobject.__dict__
-        string1 = "[User] ({}) {}".format(my_strobject.id, _dict)
-        string2 = str(my_strobject)
+        my_model4 = User()
+        _dict = my_model4.__dict__
+        string1 = "[User] ({}) {}".format(my_model4.id, _dict)
+        string2 = str(my_model4)
         self.assertEqual(string1, string2)
 
     def test_save(self):
-        """ check if date update when save """
-        my_objectupd = User()
-        first_updated = my_objectupd.updated_at
-        my_objectupd.save()
-        second_updated = my_objectupd.updated_at
+        '''check if the attribute updated_at (date) is updated for
+        the same object with the current date'''
+        my_model2 = User()
+        first_updated = my_model2.updated_at
+        my_model2.save()
+        second_updated = my_model2.updated_at
         self.assertNotEqual(first_updated, second_updated)
 
     def test_to_dict(self):
@@ -74,6 +78,23 @@ class TestUser(unittest.TestCase):
             if key == 'updated_at':
                 self.assertIsInstance(value, str)
 
+    def test_kwargs(self):
+        '''check when a dictionary in sent as **kwargs argument'''
+        my_model = User()
+        my_model.name = "Holberton"
+        my_model.my_number = 89
+        my_model_json = my_model.to_dict()
+        my_model_kwargs = User(**my_model_json)
+        self.assertNotEqual(my_model_kwargs, my_model)
 
-if __name__ == '__main__':
-    unittest.main()
+    def test_des_and_serialization(self):
+        '''check serialization and deserialization'''
+        storage = FileStorage()
+        all_objs = storage.all()
+        self.assertIsInstance(all_objs, dict, "es diccionario")  # Test all
+        my_model = User()
+        my_model.name = "Paparoachchchch"
+        my_model.my_number = 95
+        my_model.save()
+        with open("file.json", "r", encoding='utf-8') as f:
+            self.assertTrue(my_model.name in f.read())  # Test save
