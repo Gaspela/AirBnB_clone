@@ -2,6 +2,10 @@
 
 This is the console /command interpreter for the Holberton AirBnB clone project. The console can be used to store objects in and retrieve objects from a JSON.
 
+### Class diagram
+
+![](https://i.ibb.co/kDn9dns/Diagrana-de-clase.png)
+
 ### Supported classes:
 * BaseModel
 * User
