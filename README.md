@@ -25,34 +25,22 @@ This is the console /command interpreter for the Holberton AirBnB clone project.
 
 To start, navigate to the project folder and enter `./console.py` in the shell.
 
-#### Create
-`create <class name>`
-Ex:
-`create BaseModel`
+Function name  | Command
+------------- | -------------
+`create <class name>`  | `create BaseModel`
+`show <class name> <object id>`  | `show User my_id`
+`destroy <class name> <object id>`  | `show User my_id`
+`show <class name> <object id>`  | `destroy Place my_place_id`
+`all` or `all <class name>` | `all` or `all State`
+`quit` or `EOF` | `quit` or `EOF`
+`help` or `help <command>` | `help` or `help quit`
 
-#### Show
-`show <class name> <object id>`
-Ex:
-`show User my_id`
 
-#### Destroy
-`destroy <class name> <object id>`
-Ex:
-`destroy Place my_place_id`
 
-#### All
-`all` or `all <class name>`
-Ex:
-`all` or `all State`
+## Built With
+[Python](https://www.python.org/_(programming_language)) - Programming language
 
-#### Quit
-`quit` or `EOF`
+## Authors
+- **Samir Millan Orozco [Gaspela04]** https://github.com/Gaspela04
+- **Kevin castro  [KevinCastroP]** https://github.com/KevinCastroP
 
-#### Help
-`help` or `help <command>`
-Ex:
-`help` or `help quit`
-
-Additionally, the console supports `<class name>.<command>(<parameters>)` syntax.
-Ex:
-`City.show(my_city_id)
