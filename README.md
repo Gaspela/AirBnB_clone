@@ -25,7 +25,7 @@ This is the console /command interpreter for the Holberton AirBnB clone project.
 
 To start, navigate to the project folder and enter `./console.py` in the shell.
 
-###Console Commands
+### Console Commands
 
 Function name  | Command  | Description
 ------------- | ------------- | -------------
@@ -34,9 +34,9 @@ Function name  | Command  | Description
 `destroy <class name> <object id>`  | `show User my_id`  | Delete instance for the class name and id.
 `show <class name> <object id>`  | `destroy Place my_place_id`  | Prints the instance based on the class name and id
 `all` or `all <class name>` | `all` or `all State`  | Prints all representations of all instances.
-`quit` or `EOF` | `quit` or `EOF`  | `create BaseModel`  | Exit the console.
+`quit` or `EOF` | `create BaseModel`  | Exit the console.
 `help` or `help <command>` | `help` or `help quit`  | lists all commands.
-`update <class name> <id> <attribute name> "<attribute value>"` | Updates an instance based on the class name and id.
+`update <class name> <id> <attribute name> "<attribute value>"` | `update BaseModel` | Updates an instance based on the class name and id.
 
 ### Example Usage:
 
