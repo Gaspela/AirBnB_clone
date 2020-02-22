@@ -4,7 +4,7 @@ This is the console /command interpreter for the Holberton AirBnB clone project.
 
 ### Class diagram
 
-![](https://i.ibb.co/kDn9dns/Diagrana-de-clase.png)
+![](https://i.ibb.co/ykTY3Tc/Diagrana-de-clase.png)
 
 ### Supported classes:
 * BaseModel
