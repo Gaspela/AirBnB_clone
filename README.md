@@ -1,9 +1,18 @@
 # AirBnB_clone
 
-This is the console /command interpreter for the Holberton AirBnB clone project. The console can be used to store objects in and retrieve objects from a JSON.
+This is the first step towards building your first full web application: the AirBnB clone. This first step is very important because you will use what you build during this project with all other following projects: HTML/CSS templating, database storage, API, front-end integration…
+* put in place a parent class (called BaseModel) to take care of the initialization, serialization and deserialization of your  future instances.
+* Simple flow of serialization/deserialization: Instance <-> Dictionary <-> JSON string <-> file.
+* Classes used for AirBnB (User, State, City, Place…) that inherit from BaseModel.
+* Abstracted storage engine of the project: File storage.
+* unittests to validate all our classes and storage engine.
+
+### Physical sight
+In the physical view the multiple components are represented in a distributed way according to how they interact with each other. Initially we have the web application that runs thanks to a web server and another one that deploys an application server that contains web services.
+![](https://i.ibb.co/FxCvZ9D/815046647d23428a14ca.png)
+
 
 ### Class diagram
-
 ![](https://i.ibb.co/ykTY3Tc/Diagrana-de-clase.png)
 
 ### Supported classes:
@@ -16,17 +25,20 @@ This is the console /command interpreter for the Holberton AirBnB clone project.
 * Review
 
 ### Commands:
-* create - create an object
-* show - show an object (based on id)
-* destroy - destroy an object
-* all - show all objects, of one type or all types
+* Create - create an object
+* Chow - show an object (based on id)
+* Destroy - destroy an object
+* All - show all objects, of one type or all types
 * quit/EOF - quit the console
 * help - see descriptions of commands
 
+### Installation
+```
+git clone https://github.com/Gaspela04/AirBnB_clone.git
+```
 To start, navigate to the project folder and enter `./console.py` in the shell.
 
 ### Console Commands
-
 Function name  | Command  | Description
 ------------- | ------------- | -------------
 `create <class name>`  | `create BaseModel`  | Create instance of BaseModel and saves it to the JSON file.
