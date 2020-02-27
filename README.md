@@ -13,7 +13,7 @@ In the physical view the multiple components are represented in a distributed wa
 
 
 ### Class diagram
-![](https://i.ibb.co/cvFtQDj/Diagrana-de-clase.png)
+![](https://i.ibb.co/xsjG6JN/Diagrana-de-clase.png)
 
 ### Supported classes:
 * BaseModel
