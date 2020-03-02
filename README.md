@@ -9,7 +9,7 @@ This is the first step towards building your first full web application: the Air
 
 ### Physical sight
 In the physical view the multiple components are represented in a distributed way according to how they interact with each other. Initially we have the web application that runs thanks to a web server and another one that deploys an application server that contains web services.
-![](https://i.ibb.co/q54KJ6X/hbnb-step1.png)
+![](https://i.ibb.co/FxCvZ9D/815046647d23428a14ca.png)
 
 
 ### Class diagram
